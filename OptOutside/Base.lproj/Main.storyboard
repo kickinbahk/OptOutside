@@ -1,24 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OptOutside" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yI3-HU-9bH">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpt-yf-nVH">
+                                        <rect key="frame" x="45" y="110" width="285" height="99"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="99" id="nAn-lv-Nzl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="28"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eF9-mF-0ZC">
+                                        <rect key="frame" x="21" y="298" width="332" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.64313725489999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="wpt-yf-nVH" firstAttribute="centerX" secondItem="eF9-mF-0ZC" secondAttribute="centerX" id="C6z-10-b9V"/>
+                                    <constraint firstItem="eF9-mF-0ZC" firstAttribute="centerX" secondItem="yI3-HU-9bH" secondAttribute="centerX" id="IoF-gX-oYH"/>
+                                    <constraint firstItem="wpt-yf-nVH" firstAttribute="leading" secondItem="yI3-HU-9bH" secondAttribute="leading" constant="45" id="Pao-zi-SJr"/>
+                                    <constraint firstItem="eF9-mF-0ZC" firstAttribute="top" secondItem="wpt-yf-nVH" secondAttribute="bottom" constant="89" id="f4s-Jb-w7o"/>
+                                    <constraint firstItem="eF9-mF-0ZC" firstAttribute="top" secondItem="yI3-HU-9bH" secondAttribute="top" constant="298" id="q3v-EO-lh3"/>
+                                    <constraint firstItem="eF9-mF-0ZC" firstAttribute="leading" secondItem="yI3-HU-9bH" secondAttribute="leading" constant="21" id="vpz-SH-ndr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yI3-HU-9bH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ioi-Ig-up8"/>
+                            <constraint firstItem="yI3-HU-9bH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OYS-Ke-VOy"/>
+                            <constraint firstAttribute="trailing" secondItem="yI3-HU-9bH" secondAttribute="trailing" id="ekr-BD-bes"/>
+                            <constraint firstItem="yI3-HU-9bH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="kPS-RY-SIL"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="116" y="118.29085457271366"/>
         </scene>
     </scenes>
 </document>
