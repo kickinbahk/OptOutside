@@ -62,6 +62,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="promptLabel" destination="wpt-yf-nVH" id="yHc-k3-FHF"/>
+                        <outlet property="promptTextField" destination="eF9-mF-0ZC" id="pbP-x2-GFp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
