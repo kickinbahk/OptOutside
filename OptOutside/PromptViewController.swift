@@ -50,7 +50,7 @@ class PromptViewController: UIViewController {
                 distanceToEvent = text
             }
         }
-        
+        promptTextField.text = ""
     }
 
 
