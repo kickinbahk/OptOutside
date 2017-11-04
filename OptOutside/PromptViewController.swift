@@ -36,11 +36,14 @@ class PromptViewController: UIViewController {
                 typeOfEvent = text
                 updatePrompt(newPrompt: Prompts.whenToDo.randomElement)
             }
+            whichPrompt = .when
         case .when:
             if let text = promptTextField.text {
                 dayOfEvent = text
                 updatePrompt(newPrompt: Prompts.howFarAway.randomElement)
             }
+            nextButton.setTitle("Get Results", for: .normal)
+            whichPrompt = .distance
         case .distance:
             if let text = promptTextField.text {
                 distanceToEvent = text
