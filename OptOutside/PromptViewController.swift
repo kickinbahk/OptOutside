@@ -12,11 +12,21 @@ class PromptViewController: UIViewController {
 
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var promptTextField: UITextField!
+    @IBOutlet weak var nextButton: UIButton!
     
+    var typeOfEvent: String = ""
+    var dayOfEvent: String = ""
+    var distanceToEvent: String = ""
+    var whichPrompt = Question.what
+
     struct Prompts {
         static let whatToDo: String = "What activities do you like to do?"
-        static let whenTodo: String = "When are you planning on doing this?"
+        static let whenToDo: String = "When are you planning on doing this?"
         static let howFarAway: String = "How far away would you travel?"
+    }
+    
+    enum Question {
+        case what, when, distance
     }
     
     override func viewDidLoad() {
@@ -25,7 +35,30 @@ class PromptViewController: UIViewController {
         promptLabel.text = Prompts.whatToDo
     }
     
+    @IBAction func next(_ sender: UIButton) {
+        switch whichPrompt {
+        case .what:
+            if let text = promptTextField.text {
+                typeOfEvent = text
+            }
+        case .when:
+            if let text = promptTextField.text {
+                dayOfEvent = text
+            }
+        case .distance:
+            if let text = promptTextField.text {
+                distanceToEvent = text
+            }
+        }
+        
+    }
 
 
 }
 
+extension PromptViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
