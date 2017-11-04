@@ -48,6 +48,7 @@ class PromptViewController: UIViewController {
             if let text = promptTextField.text {
                 distanceToEvent = text
             }
+            promptTextField.resignFirstResponder()
         }
         promptTextField.text = ""
     }
@@ -59,7 +60,7 @@ class PromptViewController: UIViewController {
 
 extension PromptViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        next(nextButton)
         return true
     }
 }
