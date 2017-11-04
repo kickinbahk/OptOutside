@@ -18,12 +18,6 @@ class PromptViewController: UIViewController {
     var dayOfEvent: String = ""
     var distanceToEvent: String = ""
     var whichPrompt = Question.what
-
-    struct Prompts {
-        static let whatToDo: String = "What activities do you like to do?"
-        static let whenToDo: String = "When are you planning on doing this?"
-        static let howFarAway: String = "How far away would you travel?"
-    }
     
     enum Question {
         case what, when, distance
@@ -32,7 +26,7 @@ class PromptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        promptLabel.text = Prompts.whatToDo
+        promptLabel.text = Prompts.whatToDo[0]
     }
     
     @IBAction func next(_ sender: UIButton) {
@@ -40,10 +34,12 @@ class PromptViewController: UIViewController {
         case .what:
             if let text = promptTextField.text {
                 typeOfEvent = text
+                updatePrompt(newPrompt: Prompts.whenToDo[0])
             }
         case .when:
             if let text = promptTextField.text {
                 dayOfEvent = text
+                updatePrompt(newPrompt: Prompts.howFarAway[0])
             }
         case .distance:
             if let text = promptTextField.text {
@@ -53,7 +49,9 @@ class PromptViewController: UIViewController {
         promptTextField.text = ""
     }
 
-
+    private func updatePrompt(newPrompt: String) {
+        promptLabel.text = newPrompt
+    }
 }
 
 extension PromptViewController: UITextFieldDelegate {
