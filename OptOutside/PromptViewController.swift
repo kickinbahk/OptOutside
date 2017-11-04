@@ -26,7 +26,7 @@ class PromptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        promptLabel.text = Prompts.whatToDo[0]
+        promptLabel.text = Prompts.whatToDo.randomElement
     }
     
     @IBAction func next(_ sender: UIButton) {
@@ -34,12 +34,12 @@ class PromptViewController: UIViewController {
         case .what:
             if let text = promptTextField.text {
                 typeOfEvent = text
-                updatePrompt(newPrompt: Prompts.whenToDo[0])
+                updatePrompt(newPrompt: Prompts.whenToDo.randomElement)
             }
         case .when:
             if let text = promptTextField.text {
                 dayOfEvent = text
-                updatePrompt(newPrompt: Prompts.howFarAway[0])
+                updatePrompt(newPrompt: Prompts.howFarAway.randomElement)
             }
         case .distance:
             if let text = promptTextField.text {
