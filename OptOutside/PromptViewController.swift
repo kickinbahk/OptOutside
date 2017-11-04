@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PromptViewController.swift
 //  OptOutside
 //
 //  Created by Josiah Mory on 11/4/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class PromptViewController: UIViewController {
 
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var promptTextField: UITextField!
