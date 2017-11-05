@@ -7,6 +7,7 @@ target 'OptOutside' do
 
   # Pods for OptOutside
 
+  pod 'Alamofire', '~> 4.5'
   plugin 'cocoapods-keys', {
     :project => "OptOutside", 
     :keys => [
