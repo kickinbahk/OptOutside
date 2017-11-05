@@ -9,6 +9,7 @@ target 'OptOutside' do
 
   pod 'Alamofire', '~> 4.5'
   pod 'XLActionController', '~> 4.0'
+  pod 'XLActionController/Spotify'
   plugin 'cocoapods-keys', {
     :project => "OptOutside", 
     :keys => [

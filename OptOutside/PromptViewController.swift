@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Keys
+import XLActionController
 
 class PromptViewController: UIViewController {
 
@@ -16,11 +17,12 @@ class PromptViewController: UIViewController {
     @IBOutlet weak var promptTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
+    let keys = OptOutsideKeys()
     var typeOfEvent: String = ""
     var dayOfEvent: String = ""
     var distanceToEvent: String = ""
-    var whichPrompt = Question.what
-    let keys = OptOutsideKeys()
+    var whichPrompt = Question.what //
+
     
     enum Question {
         case what, when, distance
@@ -52,6 +54,7 @@ class PromptViewController: UIViewController {
         case .what:
             if let text = promptTextField.text {
                 typeOfEvent = text
+                // Get a random element from the array provide a more interactive experience
                 updatePrompt(newPrompt: Prompts.whenToDo.randomElement)
             }
             whichPrompt = .when
@@ -60,6 +63,7 @@ class PromptViewController: UIViewController {
                 dayOfEvent = text
                 updatePrompt(newPrompt: Prompts.howFarAway.randomElement)
             }
+            // Change button to indicate last question
             nextButton.setTitle("Get Results", for: .normal)
             whichPrompt = .distance
         case .distance:
@@ -67,6 +71,7 @@ class PromptViewController: UIViewController {
                 distanceToEvent = text
             }
             promptTextField.resignFirstResponder()
+            showResults()
         }
         promptTextField.text = ""
     }
@@ -74,10 +79,39 @@ class PromptViewController: UIViewController {
     private func updatePrompt(newPrompt: String) {
         promptLabel.text = newPrompt
     }
+    
+    private func showResults() {
+        let actionController = SpotifyActionController()
+        actionController.headerData = SpotifyHeaderData(title: "The Fast And The Furious Soundtrack Collection",
+                                                        subtitle: "Various Artists",
+                                                        image: UIImage(named: "image-placeholder")!)
+        actionController.addAction(Action(ActionData(title: "Save Full Album",
+                                                     image: UIImage(named: "image-placeholder")!),
+                                                     style: .default, handler: { action in }))
+        actionController.addAction(Action(ActionData(title: "Remove",
+                                                     image: UIImage(named: "image-placeholder")!),
+                                                     style: .default,
+                                                     handler: { action in }))
+        actionController.addAction(Action(ActionData(title: "Share",
+                                                     image: UIImage(named: "image-placeholder")!),
+                                                     style: .default,
+                                                     handler: { action in }))
+        actionController.addAction(Action(ActionData(title: "Go to Album",
+                                                     image: UIImage(named: "image-placeholder")!),
+                                                     style: .default,
+                                                     handler: { action in }))
+        actionController.addAction(Action(ActionData(title: "Start radio",
+                                                     image: UIImage(named: "image-placeholder")!),
+                                                     style: .default,
+                                                     handler: { action in }))
+        
+         present(actionController, animated: true, completion: nil)
+    }
 }
 
 extension PromptViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hitting return on keyboard also 'clicks' Next button
         next(nextButton)
         return true
     }
