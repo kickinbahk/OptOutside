@@ -8,6 +8,7 @@ target 'OptOutside' do
   # Pods for OptOutside
 
   pod 'Alamofire', '~> 4.5'
+  pod 'XLActionController', '~> 4.0'
   plugin 'cocoapods-keys', {
     :project => "OptOutside", 
     :keys => [
