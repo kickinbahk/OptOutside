@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Keys
 
 class PromptViewController: UIViewController {
 
@@ -19,6 +20,7 @@ class PromptViewController: UIViewController {
     var dayOfEvent: String = ""
     var distanceToEvent: String = ""
     var whichPrompt = Question.what
+    let keys = OptOutsideKeys()
     
     enum Question {
         case what, when, distance
@@ -27,7 +29,22 @@ class PromptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Alamofire.request("https://api.meetup.com/find/groups?zip=11211&sig_id=\(keys.meetupSIG_ID)"
+            + "&radius=1&category=25&sig=\(keys.meetupSIGToken)").responseJSON { response in
+                print("Request: \(String(describing: response.request))")   // original url request
+                print("Response: \(String(describing: response.response))") // http url response
+                print("Result: \(response.result)")                         // response serialization result
+                
+                if let json = response.result.value {
+                    print("JSON: \(json)") // serialized json response
+                }
+                
+                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                    print("Data: \(utf8Text)") // original server data as UTF8 string
+                }
+        }
         promptLabel.text = Prompts.whatToDo.randomElement
+        
     }
     
     @IBAction func next(_ sender: UIButton) {

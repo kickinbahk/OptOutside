@@ -11,7 +11,8 @@ target 'OptOutside' do
   plugin 'cocoapods-keys', {
     :project => "OptOutside", 
     :keys => [
-      "meetupSIGToken"
+      "meetupSIGToken",
+      "meetupSIG_ID"
     ]
   }
 end
