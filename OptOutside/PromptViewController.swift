@@ -18,10 +18,10 @@ class PromptViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     
     let keys = OptOutsideKeys()
-    var typeOfEvent: String = ""
-    var dayOfEvent: String = ""
-    var distanceToEvent: String = ""
-    var whichPrompt = Question.what //
+    private var typeOfEvent: String = ""
+    private var dayOfEvent: String = ""
+    private var distanceToEvent: String = ""
+    private var whichPrompt = Question.what //
 
     
     enum Question {
@@ -31,20 +31,7 @@ class PromptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Alamofire.request("https://api.meetup.com/find/groups?zip=11211&sig_id=\(keys.meetupSIG_ID)"
-            + "&radius=1&category=25&sig=\(keys.meetupSIGToken)").responseJSON { response in
-                print("Request: \(String(describing: response.request))")   // original url request
-                print("Response: \(String(describing: response.response))") // http url response
-                print("Result: \(response.result)")                         // response serialization result
-                
-                if let json = response.result.value {
-                    print("JSON: \(json)") // serialized json response
-                }
-                
-                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    print("Data: \(utf8Text)") // original server data as UTF8 string
-                }
-        }
+
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
@@ -80,13 +67,36 @@ class PromptViewController: UIViewController {
         promptLabel.text = newPrompt
     }
     
+    private func performSearch() {
+        
+    }
+    
+    private func meetupURL(zipNum: Int, radiusNum: Int, categoryNum: Int) -> URL {
+        let meetupURL = "https://api.meetup.com/find/groups?"
+        let zip = "zip=\(zipNum)"
+        let radius = "&\(radiusNum)"
+        let category = "&\(categoryNum)"
+        let sigToken = "&sig=\(keys.meetupSIGToken)"
+        let sigID = "&sig_id=\(keys.meetupSIG_ID)"
+        
+        let urlString = "\(meetupURL)\(zip)\(sigToken)\(sigID)\(radius)\(category)"
+        let url = URL(string: urlString)
+        print("URL:\(url!)")
+        return url!
+    }
+    
     private func showResults() {
+        let url = URL(string: "https://secure.meetupstatic.com/photos/member/5/c/a/a/thumb_45923722.jpeg")
+        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+
         let actionController = SpotifyActionController()
-        actionController.headerData = SpotifyHeaderData(title: "The Fast And The Furious Soundtrack Collection",
-                                                        subtitle: "Various Artists",
+        actionController.settings.cancelView.title = "Start Over"
+        actionController.settings.behavior.scrollEnabled = true
+        actionController.headerData = SpotifyHeaderData(title: "Results for...",
+                                                        subtitle: "\(typeOfEvent), \(dayOfEvent) within \(distanceToEvent) miles",
                                                         image: UIImage(named: "image-placeholder")!)
         actionController.addAction(Action(ActionData(title: "Save Full Album",
-                                                     image: UIImage(named: "image-placeholder")!),
+                                                     image: UIImage(data: data!)!),
                                                      style: .default, handler: { action in }))
         actionController.addAction(Action(ActionData(title: "Remove",
                                                      image: UIImage(named: "image-placeholder")!),
@@ -104,6 +114,8 @@ class PromptViewController: UIViewController {
                                                      image: UIImage(named: "image-placeholder")!),
                                                      style: .default,
                                                      handler: { action in }))
+
+        
         
          present(actionController, animated: true, completion: nil)
     }
