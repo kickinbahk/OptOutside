@@ -138,7 +138,7 @@ class PromptViewController: UIViewController {
     }
     
     private func showResults(results: [Result]) {
-        let actionController = SpotifyActionController()
+        let actionController = CustomSpotifyActionController()
         actionController.settings.cancelView.title = "Start Over"
         actionController.settings.behavior.scrollEnabled = true
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
@@ -163,6 +163,7 @@ class PromptViewController: UIViewController {
         
          present(actionController, animated: true, completion: nil)
     }
+    
     
 }
 
