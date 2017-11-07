@@ -12,5 +12,6 @@ import XLActionController
 class CustomSpotifyActionController: SpotifyActionController {
     open override func onDidDismissView() {
         print("Dismiss View Called")
+
     }
 }

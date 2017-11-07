@@ -11,8 +11,6 @@ import Alamofire
 import Keys
 import XLActionController
 
-typealias DownloadComplete = () -> ()
-
 class PromptViewController: UIViewController {
 
     @IBOutlet weak var promptLabel: UILabel!
@@ -26,8 +24,7 @@ class PromptViewController: UIViewController {
     private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
     
-    
-    enum Question {
+    private enum Question {
         case what, when, distance
     }
     
@@ -84,6 +81,9 @@ class PromptViewController: UIViewController {
                 self.results = results
             }
             showResults(results: results)
+            whichPrompt = Question.what
+            promptLabel.text = Prompts.whatToDo.randomElement
+            nextButton.setTitle("Next", for: .normal)
         }
         promptTextField.text = ""
     }
@@ -151,7 +151,7 @@ class PromptViewController: UIViewController {
                     groupImage = UIImage(data: image)!
                 }
             } else {
-                groupImage = UIImage(named: "image-placeholder")!
+                groupImage = UIImage(named: "image-placeholder-sm")!
             }
 
             actionController.addAction(Action(ActionData(title: "\(result.name)",
