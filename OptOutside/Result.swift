@@ -11,7 +11,7 @@ import Foundation
 class Result: Codable {
     var name: String
     var link: String
-    var image: Group_Photo?
+    var image: Group_Photo? // Get a nested key
     
     struct Group_Photo: Codable {
         var thumb_link: String
@@ -22,5 +22,5 @@ class Result: Codable {
 enum CodingKeys: String, Codable {
     case name
     case link
-    case image = "Group_Photo"
+    case image = "Group_Photo" // use a different key in dictionary than found in json
 }
