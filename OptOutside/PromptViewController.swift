@@ -38,23 +38,7 @@ class PromptViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        performSearch(zip: 11211, radius: 25, category: 25) { (results, error)  in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let results = results else {
-                print("error getting all results: result is nil")
-                return
-            }
-            
-            for result in results {
-                print(result)
-            }
-            
-            print(results)
-            print(results.count)
-        }
+
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
@@ -81,7 +65,25 @@ class PromptViewController: UIViewController {
                 distanceToEvent = text
             }
             promptTextField.resignFirstResponder()
-            showResults()
+            performSearch(zip: 11211, radius: 5, category: 25) { (results, error)  in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                guard let results = results else {
+                    print("error getting all results: result is nil")
+                    return
+                }
+                
+                for result in results {
+                    print(result)
+                }
+                
+                print(results)
+                print(results.count)
+                self.results = results
+            }
+            showResults(results: results)
         }
         promptTextField.text = ""
     }
@@ -135,40 +137,33 @@ class PromptViewController: UIViewController {
         return url!
     }
     
-    private func showResults() {
-        let url = URL(string: "https://secure.meetupstatic.com/photos/member/5/c/a/a/thumb_45923722.jpeg")
-        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-
+    private func showResults(results: [Result]) {
         let actionController = SpotifyActionController()
         actionController.settings.cancelView.title = "Start Over"
         actionController.settings.behavior.scrollEnabled = true
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
                                                         subtitle: "\(typeOfEvent), \(dayOfEvent) within \(distanceToEvent) miles",
                                                         image: UIImage(named: "image-placeholder")!)
-        actionController.addAction(Action(ActionData(title: "Save Full Album",
-                                                     image: UIImage(data: data!)!),
-                                                     style: .default, handler: { action in }))
-        actionController.addAction(Action(ActionData(title: "Remove",
-                                                     image: UIImage(named: "image-placeholder")!),
-                                                     style: .default,
-                                                     handler: { action in }))
-        actionController.addAction(Action(ActionData(title: "Share",
-                                                     image: UIImage(named: "image-placeholder")!),
-                                                     style: .default,
-                                                     handler: { action in }))
-        actionController.addAction(Action(ActionData(title: "Go to Album",
-                                                     image: UIImage(named: "image-placeholder")!),
-                                                     style: .default,
-                                                     handler: { action in }))
-        actionController.addAction(Action(ActionData(title: "Start radio",
-                                                     image: UIImage(named: "image-placeholder")!),
-                                                     style: .default,
-                                                     handler: { action in }))
+        for result in results {
+            var groupImage = UIImage()
+            if let imageURL = result.group_photo?.thumb_link {
+                if let image = try? Data(contentsOf: URL(string: imageURL)!) {
+                    groupImage = UIImage(data: image)!
+                }
+            } else {
+                groupImage = UIImage(named: "image-placeholder")!
+            }
 
+            actionController.addAction(Action(ActionData(title: "\(result.name)",
+                                                         image: groupImage),
+                                                         style: .default,
+                                                         handler: { action in }))
+        }
         
         
          present(actionController, animated: true, completion: nil)
     }
+    
 }
 
 extension PromptViewController: UITextFieldDelegate {
