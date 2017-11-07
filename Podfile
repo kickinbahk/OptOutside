@@ -14,7 +14,8 @@ target 'OptOutside' do
     :project => "OptOutside", 
     :keys => [
       "meetupSIGToken",
-      "meetupSIG_ID"
+      "meetupSIG_ID",
+      "meetupKey"
     ]
   }
 end

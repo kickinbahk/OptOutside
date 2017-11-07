@@ -28,6 +28,7 @@ class PromptViewController: UIViewController {
         case what, when, distance
     }
     
+    
     enum BackendError: Error {
         case urlError(reason: String)
         case objectSerialization(reason: String)
@@ -62,7 +63,7 @@ class PromptViewController: UIViewController {
                 distanceToEvent = text
             }
             promptTextField.resignFirstResponder()
-            performSearch(zip: 11211, radius: 5, category: 25) { (results, error)  in
+            performSearch(zip: 312313123, radius: 5, category: 25) { (results, error)  in
                 if let error = error {
                     print(error)
                     return
@@ -72,15 +73,10 @@ class PromptViewController: UIViewController {
                     return
                 }
                 
-                for result in results {
-                    print(result)
-                }
-                
-                print(results)
-                print(results.count)
                 self.results = results
+                self.showResults(results: results)
             }
-            showResults(results: results)
+ 
             whichPrompt = Question.what
             promptLabel.text = Prompts.whatToDo.randomElement
             nextButton.setTitle("Next", for: .normal)
@@ -128,10 +124,10 @@ class PromptViewController: UIViewController {
         let zip = "zip=\(zipNum)"
         let radius = "&radius=\(radiusNum)"
         let category = "&category=\(categoryNum)"
-        let sigToken = "&sig=\(keys.meetupSIGToken)"
-        let sigID = "&sig_id=\(keys.meetupSIG_ID)"
+        let key = "&key=\(keys.meetupKey)"
+        let sign = "&sign=true"
         
-        let urlString = "\(meetupURL)\(zip)\(sigToken)\(sigID)\(radius)\(category)"
+        let urlString = "\(meetupURL)\(zip)\(radius)\(category)\(key)\(sign)"
         let url = URL(string: urlString)
         print("URL:\(url!)")
         return url!
@@ -144,18 +140,26 @@ class PromptViewController: UIViewController {
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
                                                         subtitle: "\(typeOfEvent), \(dayOfEvent) within \(distanceToEvent) miles",
                                                         image: UIImage(named: "image-placeholder")!)
-        for result in results {
-            var groupImage = UIImage()
-            if let imageURL = result.group_photo?.thumb_link {
-                if let image = try? Data(contentsOf: URL(string: imageURL)!) {
-                    groupImage = UIImage(data: image)!
+        if results.count > 0 {
+            for result in results {
+                var groupImage = UIImage()
+                if let imageURL = result.group_photo?.thumb_link {
+                    if let image = try? Data(contentsOf: URL(string: imageURL)!) {
+                        groupImage = UIImage(data: image)!
+                    }
+                } else {
+                    groupImage = UIImage(named: "image-placeholder-sm")!
                 }
-            } else {
-                groupImage = UIImage(named: "image-placeholder-sm")!
+                
+                let size = CGSize(width: 15, height: 15)
+                actionController.addAction(Action(ActionData(title: "\(result.name)",
+                                                             image: groupImage.crop(to: size)),
+                                                             style: .default,
+                                                             handler: { action in }))
             }
-
-            actionController.addAction(Action(ActionData(title: "\(result.name)",
-                                                         image: groupImage),
+        } else {
+            actionController.addAction(Action(ActionData(title: "No Results",
+                                                         image: UIImage(named: "placeholder-image-sm")!),
                                                          style: .default,
                                                          handler: { action in }))
         }
@@ -163,7 +167,6 @@ class PromptViewController: UIViewController {
         
          present(actionController, animated: true, completion: nil)
     }
-    
     
 }
 
