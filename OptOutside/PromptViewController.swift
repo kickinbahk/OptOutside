@@ -11,6 +11,8 @@ import Alamofire
 import Keys
 import XLActionController
 
+typealias DownloadComplete = () -> ()
+
 class PromptViewController: UIViewController {
 
     @IBOutlet weak var promptLabel: UILabel!
@@ -18,20 +20,41 @@ class PromptViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     
     let keys = OptOutsideKeys()
+    private var results = [Result]()
     private var typeOfEvent: String = ""
     private var dayOfEvent: String = ""
     private var distanceToEvent: String = ""
-    private var whichPrompt = Question.what //
-
+    private var whichPrompt = Question.what
+    
     
     enum Question {
         case what, when, distance
     }
     
+    enum BackendError: Error {
+        case urlError(reason: String)
+        case objectSerialization(reason: String)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
+        performSearch(zip: 11211, radius: 1, category: 25) { (results, error)  in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let results = results else {
+                print("error getting all results: result is nil")
+                return
+            }
+            
+            for result in results {
+                print(result)
+            }
+            
+            print(results)
+            print(results.count)
+        }
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
@@ -67,15 +90,42 @@ class PromptViewController: UIViewController {
         promptLabel.text = newPrompt
     }
     
-    private func performSearch() {
+    private func performSearch(zip: Int, radius: Int, category: Int, completed: @escaping ([Result]?, Error?) -> Void) {
+        // Download meetup data
+        let url = meetupURL(zipNum: zip, radiusNum: radius, categoryNum: category)
         
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { (data, response, error) in
+            guard error == nil else {
+                completed(nil, error!)
+                return
+            }
+            
+            guard let responseData = data else {
+                print("Error: did not receive data")
+                let error = BackendError.objectSerialization(reason: "No data in response")
+                completed(nil, error)
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            do {
+        
+                let results = try decoder.decode([Result].self, from: responseData)
+                completed(results, nil)
+            } catch {
+                print("error trying to convert data to JSON")
+                print(error)
+            }
+        }
+        task.resume()
     }
     
     private func meetupURL(zipNum: Int, radiusNum: Int, categoryNum: Int) -> URL {
         let meetupURL = "https://api.meetup.com/find/groups?"
         let zip = "zip=\(zipNum)"
-        let radius = "&\(radiusNum)"
-        let category = "&\(categoryNum)"
+        let radius = "&radius=\(radiusNum)"
+        let category = "&category=\(categoryNum)"
         let sigToken = "&sig=\(keys.meetupSIGToken)"
         let sigID = "&sig_id=\(keys.meetupSIG_ID)"
         

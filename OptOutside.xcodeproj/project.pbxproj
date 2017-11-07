@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB57190F1FB1412B00ADC43A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57190E1FB1412B00ADC43A /* Result.swift */; };
 		EBEE46C81FAE234A00375150 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE46C71FAE234A00375150 /* AppDelegate.swift */; };
 		EBEE46CA1FAE234A00375150 /* PromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE46C91FAE234A00375150 /* PromptViewController.swift */; };
 		EBEE46CD1FAE234A00375150 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBEE46CB1FAE234A00375150 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 		255904EF682974C330ACDB98 /* Pods-OptOutside.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OptOutside.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OptOutside/Pods-OptOutside.debug.xcconfig"; sourceTree = "<group>"; };
 		5BA7AC13A968E54075926340 /* Pods_OptOutside.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OptOutside.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89E9A3471D4E3441A82BE2F2 /* Pods-OptOutside.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OptOutside.release.xcconfig"; path = "Pods/Target Support Files/Pods-OptOutside/Pods-OptOutside.release.xcconfig"; sourceTree = "<group>"; };
+		EB57190E1FB1412B00ADC43A /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		EBEE46C41FAE234A00375150 /* OptOutside.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OptOutside.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBEE46C71FAE234A00375150 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBEE46C91FAE234A00375150 /* PromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				EBEE46D31FAE234A00375150 /* Info.plist */,
 				EBEE46D91FAE6F6E00375150 /* Prompts.swift */,
 				EBEE46DB1FAE77C900375150 /* Array+randomElement.swift */,
+				EB57190E1FB1412B00ADC43A /* Result.swift */,
 			);
 			path = OptOutside;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBEE46CA1FAE234A00375150 /* PromptViewController.swift in Sources */,
+				EB57190F1FB1412B00ADC43A /* Result.swift in Sources */,
 				EBEE46DC1FAE77C900375150 /* Array+randomElement.swift in Sources */,
 				EBEE46DA1FAE6F6F00375150 /* Prompts.swift in Sources */,
 				EBEE46C81FAE234A00375150 /* AppDelegate.swift in Sources */,
