@@ -11,9 +11,16 @@ import Foundation
 class Result: Codable {
     var name: String
     var link: String
-    var group_photo: Group_Photo
+    var image: Group_Photo?
     
     struct Group_Photo: Codable {
         var thumb_link: String
     }
+
+}
+
+enum CodingKeys: String, Codable {
+    case name
+    case link
+    case image = "Group_Photo"
 }

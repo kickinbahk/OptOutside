@@ -38,7 +38,7 @@ class PromptViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        performSearch(zip: 11211, radius: 1, category: 25) { (results, error)  in
+        performSearch(zip: 11211, radius: 25, category: 25) { (results, error)  in
             if let error = error {
                 print(error)
                 return
