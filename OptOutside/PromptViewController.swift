@@ -17,6 +17,9 @@ class PromptViewController: UIViewController {
     @IBOutlet weak var promptTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
+    // Meetup categories 9 = Fitness, 11 = Games, 14 = Health & Wellbeing, 15 = Hobbies & Crafts,
+    // 17 = Lifestyle, 22 = New Age & Spirituality
+    
     let keys = OptOutsideKeys()
     private var results = [Result]()
     private var typeOfEvent: String = ""
@@ -34,9 +37,57 @@ class PromptViewController: UIViewController {
         case objectSerialization(reason: String)
     }
     
+    let headers: HTTPHeaders = [
+        "Authorization": "Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY",
+        "Cache-Control": "no-cache",
+        "Content-Type": "multipart/form-data",
+        "modelID": "CommunitySentiment",
+        "document": "the presentation was great and I learned a lot"
+    ]
+    
+    let parameters: Parameters = [
+        "modelID": "CommunitySentiment",
+        "document": "the presentation was great and I learned a lot"
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        //curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=CommunitySentiment" -F "document=the presentation was great and I learned a lot"
+
+//        Alamofire.request("https://api.einstein.ai/v2/language/sentiment", headers: headers, parameters: parameters).responseJSON { response in
+//            debugPrint(response)
+//        }
+
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                let modelID = "CommunitySentiment".data(using: String.Encoding.utf8)
+                let document = "the presentation was great and I learned a lot".data(using: String.Encoding.utf8)
+                multipartFormData.append(modelID!, withName: "modelId")
+                multipartFormData.append(document!, withName: "document")
+        },
+            to: "https://api.einstein.ai/v2/language/sentiment",
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString { (request: DataResponse<String>) in
+                        debugPrint(request.result)
+                        
+                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
+                        debugPrint(statusCode)
+                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
+                            debugPrint(dataFromString)
+                        }
+                    }
+                    
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        }
+        )
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
