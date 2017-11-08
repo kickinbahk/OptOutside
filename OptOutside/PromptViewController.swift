@@ -36,19 +36,6 @@ class PromptViewController: UIViewController {
         case urlError(reason: String)
         case objectSerialization(reason: String)
     }
-    
-    let headers: HTTPHeaders = [
-        "Authorization": "Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY",
-        "Cache-Control": "no-cache",
-        "Content-Type": "multipart/form-data",
-        "modelID": "CommunitySentiment",
-        "document": "the presentation was great and I learned a lot"
-    ]
-    
-    let parameters: Parameters = [
-        "modelID": "CommunitySentiment",
-        "document": "the presentation was great and I learned a lot"
-    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,34 +47,7 @@ class PromptViewController: UIViewController {
 //            debugPrint(response)
 //        }
 
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                let modelID = "CommunitySentiment".data(using: String.Encoding.utf8)
-                let document = "the presentation was great and I learned a lot".data(using: String.Encoding.utf8)
-                multipartFormData.append(modelID!, withName: "modelId")
-                multipartFormData.append(document!, withName: "document")
-        },
-            to: "https://api.einstein.ai/v2/language/sentiment",
-            method: .post,
-            headers: headers,
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.responseString { (request: DataResponse<String>) in
-                        debugPrint(request.result)
-                        
-                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
-                        debugPrint(statusCode)
-                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
-                            debugPrint(dataFromString)
-                        }
-                    }
-                    
-                case .failure(let encodingError):
-                    print(encodingError)
-                }
-        }
-        )
+
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
@@ -217,6 +177,49 @@ class PromptViewController: UIViewController {
         
         
          present(actionController, animated: true, completion: nil)
+    }
+    
+    private func getDataFromEinstein() {
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY",
+            "Cache-Control": "no-cache",
+            "Content-Type": "multipart/form-data",
+            "modelID": "CommunitySentiment",
+            "document": "the presentation was great and I learned a lot"
+        ]
+        
+
+
+        // Example taken from René Winkelmeyer's Github Example:
+        // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
+        
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                let modelID = "CommunitySentiment".data(using: String.Encoding.utf8)
+                let document = "the presentation was great and I learned a lot".data(using: String.Encoding.utf8)
+                multipartFormData.append(modelID!, withName: "modelId")
+                multipartFormData.append(document!, withName: "document")
+            },
+            to: "https://api.einstein.ai/v2/language/sentiment",
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString { (request: DataResponse<String>) in
+                        debugPrint(request.result)
+                        
+                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
+                        debugPrint(statusCode)
+                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
+                            debugPrint(dataFromString)
+                        }
+                    }
+                    
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        })
     }
     
 }

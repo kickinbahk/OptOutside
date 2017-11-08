@@ -1,0 +1,100 @@
+{
+    "intents": {
+        "cycling": [
+            "cycling", 
+            "spinning", 
+            "bicycling", 
+            "mountain biking", 
+            "biking", 
+            "bmx", 
+        ],
+        "boxing": [
+            "boxing", 
+            "fighting", 
+            "ring", 
+            "getting in the ring",
+            "bare-knuckling", 
+        ], 
+        "martial arts": [
+            "martial arts", 
+            "karate", 
+            "tae kwon do", 
+            "jujitsu", 
+            "brazilian jujitsu", 
+            "jeet kun do", 
+            "kicking"
+        ],
+        "surfing": [
+            "surfing",
+            "catching waves", 
+            "hanging ten", 
+            "boogie boarding", 
+            "boogieboarding",
+            "boogieboardin",
+            "long boarding", 
+            "longboarding", 
+            "longboardin"
+        ],
+        "hiking": [
+            "hiking", 
+            "treking", 
+            "camping", 
+            "trails", 
+            "nature", 
+            "mountains", 
+            "forest"
+        ], 
+        "rockclimbing": [
+            "rock clibming", 
+            "mountain", 
+            "climbing", 
+            "cliffs", 
+            "scaling"
+        ], 
+        "running": [
+            "running", 
+            "jogging", 
+            "sprinting",
+            "racing", 
+            "marathon", 
+            "half-marathon", 
+            "half marathon",
+            "5k"
+        ], 
+        "crossfit": [
+            "crossfit", 
+            "gynastics", 
+            "fitness training", 
+            "high-intensity", 
+            "group workout", 
+            "training",
+            "cultfit", 
+            "wod", 
+            "workouts of the day", 
+            "workouts-of-the-day",
+            "xfit", 
+            "x-fit",
+            "bootcamp",
+            "interval"
+        ], 
+        "yoga": [
+            "yoga", 
+            "stretching", 
+            "relaxing", 
+            "yogism", 
+            "yogi", 
+            "eastern discipline", 
+            "downward dog", 
+            "bikram", 
+            "hot yoga", 
+            "hatha", 
+            "iyengar", 
+            "ashatanga", 
+            "vinyasa", 
+            "jivamukti", 
+            "kundalini",
+            "anusara",
+            "restorative"
+        ]
+    }
+}
