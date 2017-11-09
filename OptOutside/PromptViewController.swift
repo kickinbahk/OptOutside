@@ -26,6 +26,8 @@ class PromptViewController: UIViewController {
     private var dayOfEvent: String = ""
     private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
+    let distanceId = "1019156"
+    let activityId = "1018910"
     
     private enum Question {
         case what, when, distance
@@ -40,14 +42,7 @@ class PromptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        //curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=CommunitySentiment" -F "document=the presentation was great and I learned a lot"
-
-//        Alamofire.request("https://api.einstein.ai/v2/language/sentiment", headers: headers, parameters: parameters).responseJSON { response in
-//            debugPrint(response)
-//        }
-
-
+        getActivityDataFromEinstein()
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
@@ -179,47 +174,46 @@ class PromptViewController: UIViewController {
          present(actionController, animated: true, completion: nil)
     }
     
-    private func getDataFromEinstein() {
+    private func getActivityDataFromEinstein() {
+        let url = "https://api.einstein.ai/v2/language/datasets/"
+        
         let headers: HTTPHeaders = [
             "Authorization": "Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY",
             "Cache-Control": "no-cache",
-            "Content-Type": "multipart/form-data",
-            "modelID": "CommunitySentiment",
-            "document": "the presentation was great and I learned a lot"
+
         ]
         
-//        curl -X GET -H "Authorization: Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY" -H "Cache-Control: no-cache" https://api.einstein.ai/v2/language/datasets/1018907
+        //        curl -X GET -H "Authorization: Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY" -H "Cache-Control: no-cache" https://api.einstein.ai/v2/language/datasets/1018907
 
         // Example taken from René Winkelmeyer's Github Example:
         // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
         
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                let modelID = "CommunitySentiment".data(using: String.Encoding.utf8)
-                let document = "the presentation was great and I learned a lot".data(using: String.Encoding.utf8)
-                multipartFormData.append(modelID!, withName: "modelId")
-                multipartFormData.append(document!, withName: "document")
-            },
-            to: "https://api.einstein.ai/v2/language/sentiment",
-            method: .post,
-            headers: headers,
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.responseString { (request: DataResponse<String>) in
-                        debugPrint(request.result)
-                        
-                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
-                        debugPrint(statusCode)
-                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
-                            debugPrint(dataFromString)
-                        }
-                    }
-                    
-                case .failure(let encodingError):
-                    print(encodingError)
-                }
-        })
+        Alamofire.request("\(url)\(activityId)", headers: headers).responseJSON { response in
+                        debugPrint(response)
+        }
+        
+//        Alamofire.upload(
+//            multipartFormData: { multipartFormData in },
+//            to: "\(url)\(activityId)",
+//            method: .post,
+//            headers: headers,
+//            encodingCompletion: { encodingResult in
+//                switch encodingResult {
+//                case .success(let upload, _, _):
+//                    upload.responseString { (request: DataResponse<String>) in
+//                        debugPrint(request.result)
+//
+//                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
+//                        debugPrint(statusCode)
+//                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
+//                            debugPrint(dataFromString)
+//                        }
+//                    }
+//
+//                case .failure(let encodingError):
+//                    print(encodingError)
+//                }
+//        })
     }
     
 }
