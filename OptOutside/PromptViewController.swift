@@ -69,9 +69,10 @@ class PromptViewController: UIViewController {
         case .distance:
             if let text = promptTextField.text {
                 distanceToEvent = text
+                getDistanceDataFromEinstein(distance: distanceToEvent, modelId: distanceModelId)
             }
             promptTextField.resignFirstResponder()
-            performSearch(zip: 312313123, radius: 5, category: 25) { (results, error)  in
+            performSearch(zip: whatZip, radius: "5", keyword: typeOfEvent) { (results, error)  in
                 if let error = error {
                     print(error)
                     return
@@ -94,9 +95,9 @@ class PromptViewController: UIViewController {
         promptLabel.text = newPrompt
     }
     
-    private func performSearch(zip: Int, radius: Int, category: Int, completed: @escaping ([Result]?, Error?) -> Void) {
+    private func performSearch(zip: String, radius: String, keyword: String, completed: @escaping ([Result]?, Error?) -> Void) {
         // Download meetup data
-        let url = meetupURL(zipNum: zip, radiusNum: radius, categoryNum: category)
+        let url = meetupURL(zip: zip, radius: radius, keywords: keyword)
         
         let session = URLSession.shared
         let task = session.dataTask(with: url) { (data, response, error) in
@@ -125,16 +126,16 @@ class PromptViewController: UIViewController {
         task.resume()
     }
     
-    private func meetupURL(zipNum: Int, radiusNum: Int, categoryNum: Int) -> URL {
+    private func meetupURL(zip: String, radius: String, keywords: String) -> URL {
         let meetupURL = "https://api.meetup.com/find/groups?"
-        let zip = "zip=\(zipNum)"
-        let radius = "&radius=\(radiusNum)"
-        let category = "&category=\(categoryNum)"
+        let zipString = "zip=\(zip)"
+        let radiusString = "&radius=\(radius)"
+        let keywordsString = "&keywords=\(keywords)"
         let key = "&key=\(keys.meetupKey)"
         let sign = "&sign=true"
         
-        let urlString = "\(meetupURL)\(zip)\(radius)\(category)\(key)\(sign)"
-        let url = URL(string: urlString)
+        let urlString = "\(meetupURL)\(zipString)\(radiusString)\(keywordsString)\(key)\(sign)"
+        let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
         print("URL:\(url!)")
         return url!
     }
