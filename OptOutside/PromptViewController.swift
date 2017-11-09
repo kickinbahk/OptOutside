@@ -26,11 +26,10 @@ class PromptViewController: UIViewController {
     private var whatZip: String = ""
     private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
-    let distanceId = "1019156"
-    let distanceModelId = "PENJXZ6JJFVCS3JUN5UQLXCEWA"
-    let activityId = "1018910"
-    let activityModelId = "5VATS6FRNDYHIMIFTOKXMOU2NE"
-
+    let distanceId = "1019173"
+    let distanceModelId = "ITW2WPKETSYEC2GT5V5IDQSJUI"
+    let activityId = "1019185"
+    let activityModelId = "XP3A7B65FK5UPY7UFHFGWWVKEA"
 
     private enum Question {
         case what, zip, distance
