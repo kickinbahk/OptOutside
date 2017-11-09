@@ -38,7 +38,7 @@ extension UIImage {
                 cropHeight = contextSize.height
                 cropWidth = contextSize.height * cropAspect
                 posX = (contextSize.width - cropWidth) / 2
-            }else{ //Square on portrait
+            } else { //Square on portrait
                 cropWidth = contextSize.width
                 cropHeight = contextSize.width / cropAspect
                 posY = (contextSize.height - cropHeight) / 2

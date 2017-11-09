@@ -81,8 +81,10 @@ class PromptViewController: UIViewController {
                     print("error getting all results: result is nil")
                     return
                 }
-                self.results = results
-                self.showResults(results: results) // Todo: Calling here not ideal since not on main thread
+                DispatchQueue.main.async {
+                    self.results = results
+                    self.showResults(results: results) // Todo: Calling here not ideal since not on main thread
+                }
             }
             self.whichPrompt = Question.what
             self.promptLabel.text = Prompts.whatToDo.randomElement
@@ -160,7 +162,7 @@ class PromptViewController: UIViewController {
                     groupImage = UIImage(named: "image-placeholder-sm")!
                 }
                 
-                let size = CGSize(width: 15, height: 15)
+                let size = CGSize(width: 44.0, height: 44.0)
                 actionController.addAction(Action(ActionData(title: "\(result.name)",
                                                              image: groupImage.crop(to: size)),
                                                              style: .default,
