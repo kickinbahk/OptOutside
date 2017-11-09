@@ -27,8 +27,11 @@ class PromptViewController: UIViewController {
     private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
     let distanceId = "1019156"
+    let distanceModelId = "V65BW2SZRZYZQLAA36IBITYMPI"
     let activityId = "1018910"
-    
+    let activityModelId = "D7LGODT6RJWGMW5UIF27SPC6LQ"
+
+
     private enum Question {
         case what, when, distance
     }
@@ -139,6 +142,8 @@ class PromptViewController: UIViewController {
         return url!
     }
     
+
+    
     private func showResults(results: [Result]) {
         let actionController = CustomSpotifyActionController()
         actionController.settings.cancelView.title = "Start Over"
@@ -182,6 +187,9 @@ class PromptViewController: UIViewController {
             "Cache-Control": "no-cache",
 
         ]
+        
+
+        
         
         //        curl -X GET -H "Authorization: Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY" -H "Cache-Control: no-cache" https://api.einstein.ai/v2/language/datasets/1018907
 
