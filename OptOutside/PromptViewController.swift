@@ -84,7 +84,7 @@ class PromptViewController: UIViewController {
                 }
                 DispatchQueue.main.async {
                     self.results = results
-                    self.showResults(results: results) // Todo: Calling here not ideal since not on main thread
+                    self.showResults(results: results)
                 }
             }
             self.whichPrompt = Question.what
@@ -210,12 +210,13 @@ class PromptViewController: UIViewController {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseString { (request: DataResponse<String>) in
-                        debugPrint(request.result)
-
                         let statusCode = NSNumber(value: (request.response?.statusCode)!)
                         debugPrint(statusCode)
                         if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
-                            debugPrint(dataFromString)
+                            let json = JSON(data: dataFromString)
+                            let probableMatch = json["probabilities"][0]["label"].stringValue
+                            print(probableMatch)
+                            self.typeOfEvent = probableMatch
                         }
                     }
 
@@ -255,12 +256,14 @@ class PromptViewController: UIViewController {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseString { (request: DataResponse<String>) in
-                        debugPrint(request.result)
                         
                         let statusCode = NSNumber(value: (request.response?.statusCode)!)
                         debugPrint(statusCode)
                         if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
-                            debugPrint(dataFromString)
+                            let json = JSON(data: dataFromString)
+                            let probableMatch = json["probabilities"][0]["label"].stringValue
+                            print(probableMatch)
+                            self.distanceToEvent = probableMatch
                         }
                     }
                     
