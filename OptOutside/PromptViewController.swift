@@ -23,7 +23,7 @@ class PromptViewController: UIViewController {
     let keys = OptOutsideKeys()
     private var results = [Result]()
     private var typeOfEvent: String = ""
-    private var dayOfEvent: String = ""
+    private var whatZip: String = ""
     private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
     let distanceId = "1019156"
@@ -33,7 +33,7 @@ class PromptViewController: UIViewController {
 
 
     private enum Question {
-        case what, when, distance
+        case what, zip, distance
     }
     
     
@@ -56,12 +56,12 @@ class PromptViewController: UIViewController {
             if let text = promptTextField.text {
                 typeOfEvent = text
                 // Get a random element from the array provide a more interactive experience
-                updatePrompt(newPrompt: Prompts.whenToDo.randomElement)
+                updatePrompt(newPrompt: Prompts.whatIsZip.randomElement)
             }
-            whichPrompt = .when
-        case .when:
+            whichPrompt = .zip
+        case .zip:
             if let text = promptTextField.text {
-                dayOfEvent = text
+                whatZip = text
                 updatePrompt(newPrompt: Prompts.howFarAway.randomElement)
             }
             // Change button to indicate last question
@@ -81,14 +81,12 @@ class PromptViewController: UIViewController {
                     print("error getting all results: result is nil")
                     return
                 }
-                
                 self.results = results
-                self.showResults(results: results)
+                self.showResults(results: results) // Todo: Calling here not ideal since not on main thread
             }
- 
-            whichPrompt = Question.what
-            promptLabel.text = Prompts.whatToDo.randomElement
-            nextButton.setTitle("Next", for: .normal)
+            self.whichPrompt = Question.what
+            self.promptLabel.text = Prompts.whatToDo.randomElement
+            self.nextButton.setTitle("Next", for: .normal)
         }
         promptTextField.text = ""
     }
@@ -170,7 +168,7 @@ class PromptViewController: UIViewController {
             }
         } else {
             actionController.addAction(Action(ActionData(title: "No Results",
-                                                         image: UIImage(named: "placeholder-image-sm")!),
+                                                         image: UIImage(named: "image-placeholder-sm")!),
                                                          style: .default,
                                                          handler: { action in }))
         }
