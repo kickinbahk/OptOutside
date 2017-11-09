@@ -27,9 +27,9 @@ class PromptViewController: UIViewController {
     private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
     let distanceId = "1019156"
-    let distanceModelId = "V65BW2SZRZYZQLAA36IBITYMPI"
+    let distanceModelId = "PENJXZ6JJFVCS3JUN5UQLXCEWA"
     let activityId = "1018910"
-    let activityModelId = "D7LGODT6RJWGMW5UIF27SPC6LQ"
+    let activityModelId = "5VATS6FRNDYHIMIFTOKXMOU2NE"
 
 
     private enum Question {
@@ -147,7 +147,7 @@ class PromptViewController: UIViewController {
         actionController.settings.cancelView.title = "Start Over"
         actionController.settings.behavior.scrollEnabled = true
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
-                                                        subtitle: "\(typeOfEvent), \(dayOfEvent) within \(distanceToEvent) miles",
+                                                        subtitle: "\(typeOfEvent), \(whatZip) within \(distanceToEvent) miles",
                                                         image: UIImage(named: "image-placeholder")!)
         if results.count > 0 {
             for result in results {
