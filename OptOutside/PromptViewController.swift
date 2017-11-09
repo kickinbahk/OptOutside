@@ -189,7 +189,7 @@ class PromptViewController: UIViewController {
         let url = "https://api.einstein.ai/v2/language/intent"
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer NCC3JY33DTLAUB3IHOU2GO27WSRAFPKTWJQ5JGNMABD2QOAUQLTIXUMH5BC37ZWVH5V4GAMWNY2J4RUDJ7UNHWFDLFKDDPW3PR4S4MI",
+            "Authorization": "Bearer \(keys.einsteinToken)",
             "Cache-Control": "no-cache",
 
         ]
@@ -235,7 +235,7 @@ class PromptViewController: UIViewController {
         let url = "https://api.einstein.ai/v2/language/intent"
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer NCC3JY33DTLAUB3IHOU2GO27WSRAFPKTWJQ5JGNMABD2QOAUQLTIXUMH5BC37ZWVH5V4GAMWNY2J4RUDJ7UNHWFDLFKDDPW3PR4S4MI",
+            "Authorization": "Bearer \(keys.einsteinToken)",
             "Cache-Control": "no-cache",
             
             ]
