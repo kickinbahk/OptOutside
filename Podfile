@@ -16,7 +16,8 @@ target 'OptOutside' do
     :keys => [
       "meetupSIGToken",
       "meetupSIG_ID",
-      "meetupKey"
+      "meetupKey",
+      "einsteinToken"
     ]
   }
 end
