@@ -44,7 +44,6 @@ class PromptViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        getActivityDataFromEinstein()
         promptLabel.text = Prompts.whatToDo.randomElement
         
     }
@@ -55,6 +54,7 @@ class PromptViewController: UIViewController {
             if let text = promptTextField.text {
                 typeOfEvent = text
                 // Get a random element from the array provide a more interactive experience
+                getActivityDataFromEinstein(activity: typeOfEvent, modelId: activityModelId)
                 updatePrompt(newPrompt: Prompts.whatIsZip.randomElement)
             }
             whichPrompt = .zip
@@ -176,49 +176,94 @@ class PromptViewController: UIViewController {
          present(actionController, animated: true, completion: nil)
     }
     
-    private func getActivityDataFromEinstein() {
-        let url = "https://api.einstein.ai/v2/language/datasets/"
+    private func getActivityDataFromEinstein(activity: String, modelId: String) {
+        // Sample call
+        // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
+        
+        let url = "https://api.einstein.ai/v2/language/intent"
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY",
+            "Authorization": "Bearer NCC3JY33DTLAUB3IHOU2GO27WSRAFPKTWJQ5JGNMABD2QOAUQLTIXUMH5BC37ZWVH5V4GAMWNY2J4RUDJ7UNHWFDLFKDDPW3PR4S4MI",
             "Cache-Control": "no-cache",
 
         ]
-        
-
-        
-        
-        //        curl -X GET -H "Authorization: Bearer HTXIZJ2NJWXK7K5ONYCLZCNFAXIL5XO3OYFRAY566QSWLXLIYFRDOVZY5I5XIPA4PUURQG2MNGOTXAY3IG4QZLGL5LMR5OXB4OT7CBY" -H "Cache-Control: no-cache" https://api.einstein.ai/v2/language/datasets/1018907
 
         // Example taken from René Winkelmeyer's Github Example:
         // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
         
-        Alamofire.request("\(url)\(activityId)", headers: headers).responseJSON { response in
-                        debugPrint(response)
-        }
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                let modelId = modelId.data(using: String.Encoding.utf8)
+                let document = activity.data(using: String.Encoding.utf8)
+                
+                multipartFormData.append(modelId!, withName: "modelId")
+                multipartFormData.append(document!, withName: "document")
+            },
+            to: "\(url)",
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString { (request: DataResponse<String>) in
+                        debugPrint(request.result)
+
+                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
+                        debugPrint(statusCode)
+                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
+                            debugPrint(dataFromString)
+                        }
+                    }
+
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        })
+    }
+    
+    private func getDistanceDataFromEinstein(distance: String, modelId: String) {
+        // Sample call
+        // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
         
-//        Alamofire.upload(
-//            multipartFormData: { multipartFormData in },
-//            to: "\(url)\(activityId)",
-//            method: .post,
-//            headers: headers,
-//            encodingCompletion: { encodingResult in
-//                switch encodingResult {
-//                case .success(let upload, _, _):
-//                    upload.responseString { (request: DataResponse<String>) in
-//                        debugPrint(request.result)
-//
-//                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
-//                        debugPrint(statusCode)
-//                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
-//                            debugPrint(dataFromString)
-//                        }
-//                    }
-//
-//                case .failure(let encodingError):
-//                    print(encodingError)
-//                }
-//        })
+        let url = "https://api.einstein.ai/v2/language/intent"
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer NCC3JY33DTLAUB3IHOU2GO27WSRAFPKTWJQ5JGNMABD2QOAUQLTIXUMH5BC37ZWVH5V4GAMWNY2J4RUDJ7UNHWFDLFKDDPW3PR4S4MI",
+            "Cache-Control": "no-cache",
+            
+            ]
+        
+        // Example taken from René Winkelmeyer's Github Example:
+        // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
+        
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                let modelId = modelId.data(using: String.Encoding.utf8)
+                let document = distance.data(using: String.Encoding.utf8)
+                
+                multipartFormData.append(modelId!, withName: "modelId")
+                multipartFormData.append(document!, withName: "document")
+        },
+            to: "\(url)",
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString { (request: DataResponse<String>) in
+                        debugPrint(request.result)
+                        
+                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
+                        debugPrint(statusCode)
+                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
+                            debugPrint(dataFromString)
+                        }
+                    }
+                    
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        })
     }
     
 }
