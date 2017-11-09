@@ -8,6 +8,7 @@ target 'OptOutside' do
   # Pods for OptOutside
 
   pod 'Alamofire', '~> 4.5'
+  pod 'SwiftyJSON'
   pod 'XLActionController', '~> 4.0'
   pod 'XLActionController/Spotify'
   plugin 'cocoapods-keys', {

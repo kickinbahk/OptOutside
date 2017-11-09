@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Keys
 import XLActionController
+import SwiftyJSON
 
 class PromptViewController: UIViewController {
 
