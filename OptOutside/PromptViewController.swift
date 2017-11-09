@@ -136,8 +136,10 @@ class PromptViewController: UIViewController {
         let keywordsString = "&keywords=\(keywords)"
         let key = "&key=\(keys.meetupKey)"
         let sign = "&sign=true"
+        let upcomingEvents = "upcoming_events=true"
+        let resultsNum = "&page=20"
         
-        let urlString = "\(meetupURL)\(zipString)\(radiusString)\(keywordsString)\(key)\(sign)"
+        let urlString = "\(meetupURL)\(zipString)\(radiusString)\(keywordsString)\(key)\(sign)\(upcomingEvents)\(resultsNum)"
         let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
         print("URL:\(url!)")
         return url!
