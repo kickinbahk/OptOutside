@@ -18,8 +18,6 @@ extension UIImage {
         let contextSize: CGSize = contextImage.size
         
         //Set to square
-        var posX: CGFloat = 0.0
-        var posY: CGFloat = 0.0
         var position: CGPoint = .zero
         let cropAspect: CGFloat = to.width / to.height
         
