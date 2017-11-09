@@ -18,9 +18,6 @@ class PromptViewController: UIViewController {
     @IBOutlet weak var promptTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
-    // Meetup categories 9 = Fitness, 11 = Games, 14 = Health & Wellbeing, 15 = Hobbies & Crafts,
-    // 17 = Lifestyle, 22 = New Age & Spirituality
-    
     let keys = OptOutsideKeys()
     private var results = [Result]()
     private var typeOfEvent: String = ""
@@ -149,7 +146,6 @@ class PromptViewController: UIViewController {
     
     private func showResults(results: [Result]) {
         let actionController = CustomSpotifyActionController()
-        actionController.settings.cancelView.title = "Start Over"
         actionController.settings.behavior.scrollEnabled = true
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
                                                         subtitle: "\(typeOfEvent), \(whatZip) within \(distanceToEvent) miles",
@@ -178,8 +174,8 @@ class PromptViewController: UIViewController {
                                                          handler: { action in }))
         }
         
-        
-         present(actionController, animated: true, completion: nil)
+        actionController.settings.cancelView.title = "Change phrase for different results..."
+        present(actionController, animated: true, completion: nil)
     }
     
     private func getActivityDataFromEinstein(activity: String, modelId: String) {
