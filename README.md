@@ -1,4 +1,4 @@
-#\#OptOutside
+# #OptOutside #
 
 OptOutside allows users to connect with Meetup groups who have similar interests of activities.
 
@@ -8,7 +8,7 @@ It uses [Einstein Intent](https://www.salesforce.com/products/einstein/overview/
 Fork the project or download the zip file. 
 
 ### Install the Pods:
-Run `pod install` and make sure to add the keys when prompted (See Below). If you don't currently have cocoapods on your machine, follow the instructions [on their website](https://cocoapods.org
+Run `pod install` and make sure to add the keys when prompted (See Below). If you don't currently have cocoapods on your machine, follow the instructions [on their website](https://cocoapods.org)
 
 ### Keys:
 OptOutside doesn't currently have a way to create tokens for the APIs it hits. It uses [Cocoapods-Keys](https://github.com/orta/cocoapods-keys) to store the keys. When you install the projects pods, it will ask you to enter the keys. You should copy and paste these into the console. _Do note: I have had to sometimes run `pod update` a second time adter I added the keys.
@@ -22,3 +22,5 @@ In Xcode, click on the top level of the project in the Project Navigator (on the
 
 #
 You should now be ready to run the app
+
+#####_For bug, issue and feature tracking, see [Trello Board for OptOutside](https://trello.com/b/70QnQif1/optoutside)
