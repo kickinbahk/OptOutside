@@ -20,6 +20,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     
     let keys = OptOutsideKeys()
     let networkRequests = MeetupNetworkRequests()
+    let group = DispatchGroup()
     private var results = [Result]()
     private var typeOfEvent: String = ""
     private var whatZip: String = ""
@@ -30,6 +31,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     let activityId = "1019185"
     let activityModelId = "XP3A7B65FK5UPY7UFHFGWWVKEA"
     var link = ""
+    var meetupTitle = ""
 
     private enum Question {
         case what, zip, distance
@@ -49,6 +51,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
         if segue.identifier == "showWebView" {
             let webViewController = segue.destination as! WebViewController
             webViewController.url = link
+            webViewController.meetupTitle = meetupTitle
         }
     }
     
@@ -76,18 +79,22 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                 getDistanceDataFromEinstein(distance: distanceToEvent, modelId: distanceModelId)
             }
             promptTextField.resignFirstResponder()
-            networkRequests.performSearch(zip: whatZip, radius: "5", keyword: typeOfEvent) { (results, error)  in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                guard let results = results else {
-                    print("error getting all results: result is nil")
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.results = results
-                    self.showResults(results: results)
+            group.notify(queue: .main) {
+                self.networkRequests.performSearch(zip: self.whatZip,
+                                              radius: self.distanceToEvent,
+                                              keyword: self.typeOfEvent) { (results, error)  in
+                    if let error = error {
+                        print(error)
+                        return
+                    }
+                    guard let results = results else {
+                        print("error getting all results: result is nil")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.results = results
+                        self.showResults(results: results)
+                    }
                 }
             }
             self.whichPrompt = Question.what
@@ -124,6 +131,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                                                              style: .default,
                                                              handler: { action in
                     self.link = result.link
+                    self.meetupTitle = result.name
                     self.performSegue(withIdentifier: "showWebView", sender: nil)
                 }))
             }
@@ -145,6 +153,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
         // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
         
         let url = "https://api.einstein.ai/v2/language/intent"
+        group.enter()
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(keys.einsteinToken)",
@@ -178,6 +187,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                             let probableMatch = json["probabilities"][0]["label"].stringValue
                             print(probableMatch)
                             self.typeOfEvent = probableMatch
+                            self.group.leave()
                         }
                         
                     }
@@ -193,6 +203,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
         // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
         
         let url = "https://api.einstein.ai/v2/language/intent"
+        group.enter()
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(keys.einsteinToken)",
@@ -226,12 +237,14 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                             let probableMatch = json["probabilities"][0]["label"].stringValue
                             print(probableMatch)
                             self.distanceToEvent = probableMatch
+                            self.group.leave()
                         }
                     }
                     
                 case .failure(let encodingError):
                     print(encodingError)
                 }
+
         })
     }
     

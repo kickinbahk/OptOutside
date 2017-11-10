@@ -124,7 +124,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <viewLayoutGuide key="safeArea" id="tYz-Zw-HCR"/>
                                 <items>
-                                    <navigationItem title="Title" id="EWA-Ev-cDs">
+                                    <navigationItem title="Meetup" id="EWA-Ev-cDs">
                                         <barButtonItem key="leftBarButtonItem" title="Close" id="YMp-rn-m31">
                                             <connections>
                                                 <action selector="close:" destination="1Ju-lH-sC7" id="yoh-6d-pCV"/>
@@ -154,6 +154,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="navBar" destination="ep5-XQ-ypM" id="mNU-bV-Upr"/>
                         <outlet property="webView" destination="gkd-s9-AXF" id="sAP-a4-jqN"/>
                     </connections>
                 </viewController>

@@ -12,13 +12,16 @@ import WebKit
 class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var navBar: UINavigationBar!
     var url = ""
+    var meetupTitle = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.uiDelegate = self
         webView.navigationDelegate = self
-        
+
+        navBar.topItem?.title = meetupTitle
         print("webview loaded: \(url)")
         makeURLRequest(url: url)
     }
