@@ -161,7 +161,7 @@ class PromptViewController: UIViewController {
                     groupImage = UIImage(named: "image-placeholder-sm")!
                 }
                 
-                let size = CGSize(width: 44.0, height: 44.0)
+                let size = CGSize(width: 44, height: 44)
                 actionController.addAction(Action(ActionData(title: "\(result.name)",
                                                              image: groupImage.crop(to: size)),
                                                              style: .default,
