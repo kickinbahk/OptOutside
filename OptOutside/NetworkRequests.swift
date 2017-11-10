@@ -67,4 +67,55 @@ class NetworkRequests {
         return url!
     }
     
+    // MARK: - EINSTEIN REQUESTS
+    
+    func getActivityDataFromEinstein(activity: String, modelId: String) -> String {
+        // Sample call
+        // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
+        
+        let url = "https://api.einstein.ai/v2/language/intent"
+        var probableActivity = ""
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(keys.einsteinToken)",
+            "Cache-Control": "no-cache",
+            
+            ]
+        
+        // Example taken from René Winkelmeyer's Github Example:
+        // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
+        
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                let modelId = modelId.data(using: String.Encoding.utf8)
+                let document = activity.data(using: String.Encoding.utf8)
+                
+                multipartFormData.append(modelId!, withName: "modelId")
+                multipartFormData.append(document!, withName: "document")
+        },
+            to: "\(url)",
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+
+                    upload.responseString { (request: DataResponse<String>) in
+                        let statusCode = NSNumber(value: (request.response?.statusCode)!)
+                        debugPrint("ACTIVITY: \(statusCode)")
+                        if let dataFromString = request.result.value!.data(using: .utf8, allowLossyConversion: false) {
+                            let json = JSON(data: dataFromString)
+                            let probableMatch = json["probabilities"][0]["label"].stringValue
+                            print(probableMatch)
+                            probableActivity = probableMatch
+                        }
+
+                    }
+                    
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        })
+        return probableActivity
+    }
 }
