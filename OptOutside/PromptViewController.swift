@@ -12,7 +12,7 @@ import Keys
 import XLActionController
 import SwiftyJSON
 
-class PromptViewController: UIViewController {
+class PromptViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var promptTextField: UITextField!
@@ -28,6 +28,7 @@ class PromptViewController: UIViewController {
     let distanceModelId = "ITW2WPKETSYEC2GT5V5IDQSJUI"
     let activityId = "1019185"
     let activityModelId = "XP3A7B65FK5UPY7UFHFGWWVKEA"
+    var link = ""
 
     private enum Question {
         case what, zip, distance
@@ -44,6 +45,13 @@ class PromptViewController: UIViewController {
 
         promptLabel.text = Prompts.whatToDo.randomElement
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showWebView" {
+            let webViewController = segue.destination as! WebViewController
+            webViewController.url = link
+        }
     }
     
     @IBAction func next(_ sender: UIButton) {
@@ -148,7 +156,7 @@ class PromptViewController: UIViewController {
         let actionController = CustomSpotifyActionController()
         actionController.settings.behavior.scrollEnabled = true
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
-                                                        subtitle: "\(typeOfEvent), \(whatZip) within \(distanceToEvent) miles",
+                                                        subtitle: "\(typeOfEvent), \(whatZip), & \(distanceToEvent)",
                                                         image: UIImage(named: "image-placeholder")!)
         if results.count > 0 {
             for result in results {
@@ -165,7 +173,10 @@ class PromptViewController: UIViewController {
                 actionController.addAction(Action(ActionData(title: "\(result.name)",
                                                              image: groupImage.crop(to: size)),
                                                              style: .default,
-                                                             handler: { action in }))
+                                                             handler: { action in
+                                                                self.link = result.link
+                                                                self.performSegue(withIdentifier: "showWebView", sender: nil)
+                }))
             }
         } else {
             actionController.addAction(Action(ActionData(title: "No Results",

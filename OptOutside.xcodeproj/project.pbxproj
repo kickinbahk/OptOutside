@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB0F67E81FB53896002429D3 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0F67E71FB53896002429D3 /* WebViewController.swift */; };
 		EB57190F1FB1412B00ADC43A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57190E1FB1412B00ADC43A /* Result.swift */; };
 		EB5719111FB1FF4200ADC43A /* CustomSpotifyActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5719101FB1FF4200ADC43A /* CustomSpotifyActionController.swift */; };
 		EB5719131FB2180400ADC43A /* UIImage+crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5719121FB2180400ADC43A /* UIImage+crop.swift */; };
@@ -24,6 +25,7 @@
 		255904EF682974C330ACDB98 /* Pods-OptOutside.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OptOutside.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OptOutside/Pods-OptOutside.debug.xcconfig"; sourceTree = "<group>"; };
 		5BA7AC13A968E54075926340 /* Pods_OptOutside.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OptOutside.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89E9A3471D4E3441A82BE2F2 /* Pods-OptOutside.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OptOutside.release.xcconfig"; path = "Pods/Target Support Files/Pods-OptOutside/Pods-OptOutside.release.xcconfig"; sourceTree = "<group>"; };
+		EB0F67E71FB53896002429D3 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		EB57190E1FB1412B00ADC43A /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		EB5719101FB1FF4200ADC43A /* CustomSpotifyActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpotifyActionController.swift; sourceTree = "<group>"; };
 		EB5719121FB2180400ADC43A /* UIImage+crop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+crop.swift"; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				EB57190E1FB1412B00ADC43A /* Result.swift */,
 				EB5719101FB1FF4200ADC43A /* CustomSpotifyActionController.swift */,
 				EB5719121FB2180400ADC43A /* UIImage+crop.swift */,
+				EB0F67E71FB53896002429D3 /* WebViewController.swift */,
 			);
 			path = OptOutside;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				EB5719111FB1FF4200ADC43A /* CustomSpotifyActionController.swift in Sources */,
 				EBEE46DA1FAE6F6F00375150 /* Prompts.swift in Sources */,
 				EBEE46C81FAE234A00375150 /* AppDelegate.swift in Sources */,
+				EB0F67E81FB53896002429D3 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

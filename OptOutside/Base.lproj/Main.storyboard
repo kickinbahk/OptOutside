@@ -97,11 +97,69 @@
                         <outlet property="nextButton" destination="q0z-o0-6om" id="say-jx-4Io"/>
                         <outlet property="promptLabel" destination="wpt-yf-nVH" id="yHc-k3-FHF"/>
                         <outlet property="promptTextField" destination="eF9-mF-0ZC" id="pbP-x2-GFp"/>
+                        <segue destination="1Ju-lH-sC7" kind="show" identifier="showWebView" id="zwd-0O-sLc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="118.29085457271366"/>
+            <point key="canvasLocation" x="186" y="116"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="clf-2S-Z5F">
+            <objects>
+                <viewController id="1Ju-lH-sC7" customClass="WebViewController" customModule="OptOutside" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sqd-We-9DS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkd-s9-AXF">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep5-XQ-ypM">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <viewLayoutGuide key="safeArea" id="tYz-Zw-HCR"/>
+                                <items>
+                                    <navigationItem title="Title" id="EWA-Ev-cDs">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="YMp-rn-m31">
+                                            <connections>
+                                                <action selector="close:" destination="1Ju-lH-sC7" id="yoh-6d-pCV"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gkd-s9-AXF" firstAttribute="top" secondItem="sqd-We-9DS" secondAttribute="top" constant="44" id="0wd-Of-r2h"/>
+                            <constraint firstItem="gkd-s9-AXF" firstAttribute="bottom" secondItem="uDa-y5-Dir" secondAttribute="bottom" id="Cy2-N3-Ees"/>
+                            <constraint firstItem="ep5-XQ-ypM" firstAttribute="leading" secondItem="gkd-s9-AXF" secondAttribute="leading" id="J7K-hU-gpD"/>
+                            <constraint firstAttribute="trailing" secondItem="gkd-s9-AXF" secondAttribute="trailing" id="PZa-El-BcT"/>
+                            <constraint firstItem="ep5-XQ-ypM" firstAttribute="trailing" secondItem="gkd-s9-AXF" secondAttribute="trailing" id="WLF-FC-bHi"/>
+                            <constraint firstItem="gkd-s9-AXF" firstAttribute="leading" secondItem="sqd-We-9DS" secondAttribute="leading" id="cj0-bL-3m0"/>
+                            <constraint firstItem="ep5-XQ-ypM" firstAttribute="top" secondItem="uDa-y5-Dir" secondAttribute="top" id="oba-eX-DYr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uDa-y5-Dir"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="AkX-Rx-z7a">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="dFl-5W-krt">
+                            <connections>
+                                <action selector="close:" destination="1Ju-lH-sC7" id="qEb-oe-JVe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="gkd-s9-AXF" id="sAP-a4-jqN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oUy-f1-go5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1081" y="116"/>
         </scene>
     </scenes>
 </document>
