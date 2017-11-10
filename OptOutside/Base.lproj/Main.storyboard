@@ -97,7 +97,7 @@
                         <outlet property="nextButton" destination="q0z-o0-6om" id="say-jx-4Io"/>
                         <outlet property="promptLabel" destination="wpt-yf-nVH" id="yHc-k3-FHF"/>
                         <outlet property="promptTextField" destination="eF9-mF-0ZC" id="pbP-x2-GFp"/>
-                        <segue destination="1Ju-lH-sC7" kind="show" identifier="showWebView" id="zwd-0O-sLc"/>
+                        <segue destination="1Ju-lH-sC7" kind="presentation" identifier="showWebView" id="zwd-0O-sLc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

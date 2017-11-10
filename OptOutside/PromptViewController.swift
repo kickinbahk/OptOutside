@@ -22,9 +22,9 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     let networkRequests = MeetupNetworkRequests()
     let group = DispatchGroup()
     private var results = [Result]()
-    private var typeOfEvent: String = ""
-    private var whatZip: String = ""
-    private var distanceToEvent: String = ""
+    private var typeOfEvent: String = "swimming"
+    private var whatZip: String = "06010"
+    private var distanceToEvent: String = "10 miles"
     private var whichPrompt = Question.what
     let distanceId = "1019173"
     let distanceModelId = "ITW2WPKETSYEC2GT5V5IDQSJUI"
@@ -37,9 +37,6 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
         case what, zip, distance
     }
     
-    
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -257,3 +254,4 @@ extension PromptViewController: UITextFieldDelegate {
         return true
     }
 }
+

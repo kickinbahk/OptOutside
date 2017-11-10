@@ -55,7 +55,7 @@ class MeetupNetworkRequests {
         let meetupURL = "https://api.meetup.com/find/groups?"
         let zipString = "zip=\(zip)"
         let radiusString = "&radius=\(radius)"
-        let keywordsString = "&keywords=\(keywords)"
+        let keywordsString = "&text=\(keywords)"
         let key = "&key=\(keys.meetupKey)"
         let sign = "&sign=true"
         let resultsNum = "&page=20"
