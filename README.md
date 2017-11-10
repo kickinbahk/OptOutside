@@ -4,6 +4,13 @@ OptOutside allows users to connect with Meetup groups who have similar interests
 
 It uses [Einstein Intent](https://www.salesforce.com/products/einstein/overview/) to take user input (one word to entire phrases) and figure out their request. See the [Einstein API here.](https://metamind.readme.io/docs/introduction-to-the-einstein-predictive-vision-service)
 
+### Presentation: 
+<script async class="speakerdeck-embed" data-id="e81075e5676d481aa6c213056845dd87" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+### Video Demo: 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oQR17lxRhDw" frameborder="0" gesture="media" allowfullscreen></iframe>
+
+
 ## Trying it Out...
 Fork the project or download the zip file. 
 
