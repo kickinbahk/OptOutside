@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EB0F67E81FB53896002429D3 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0F67E71FB53896002429D3 /* WebViewController.swift */; };
-		EB0F67EA1FB55C36002429D3 /* NetworkRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0F67E91FB55C36002429D3 /* NetworkRequests.swift */; };
+		EB0F67EA1FB55C36002429D3 /* MeetupNetworkRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0F67E91FB55C36002429D3 /* MeetupNetworkRequests.swift */; };
 		EB57190F1FB1412B00ADC43A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57190E1FB1412B00ADC43A /* Result.swift */; };
 		EB5719111FB1FF4200ADC43A /* CustomSpotifyActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5719101FB1FF4200ADC43A /* CustomSpotifyActionController.swift */; };
 		EB5719131FB2180400ADC43A /* UIImage+crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5719121FB2180400ADC43A /* UIImage+crop.swift */; };
@@ -27,7 +27,7 @@
 		5BA7AC13A968E54075926340 /* Pods_OptOutside.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OptOutside.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89E9A3471D4E3441A82BE2F2 /* Pods-OptOutside.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OptOutside.release.xcconfig"; path = "Pods/Target Support Files/Pods-OptOutside/Pods-OptOutside.release.xcconfig"; sourceTree = "<group>"; };
 		EB0F67E71FB53896002429D3 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		EB0F67E91FB55C36002429D3 /* NetworkRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequests.swift; sourceTree = "<group>"; };
+		EB0F67E91FB55C36002429D3 /* MeetupNetworkRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupNetworkRequests.swift; sourceTree = "<group>"; };
 		EB57190E1FB1412B00ADC43A /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		EB5719101FB1FF4200ADC43A /* CustomSpotifyActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpotifyActionController.swift; sourceTree = "<group>"; };
 		EB5719121FB2180400ADC43A /* UIImage+crop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+crop.swift"; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 				EB5719101FB1FF4200ADC43A /* CustomSpotifyActionController.swift */,
 				EB5719121FB2180400ADC43A /* UIImage+crop.swift */,
 				EB0F67E71FB53896002429D3 /* WebViewController.swift */,
-				EB0F67E91FB55C36002429D3 /* NetworkRequests.swift */,
+				EB0F67E91FB55C36002429D3 /* MeetupNetworkRequests.swift */,
 			);
 			path = OptOutside;
 			sourceTree = "<group>";
@@ -249,7 +249,7 @@
 				EBEE46DC1FAE77C900375150 /* Array+randomElement.swift in Sources */,
 				EB5719131FB2180400ADC43A /* UIImage+crop.swift in Sources */,
 				EB5719111FB1FF4200ADC43A /* CustomSpotifyActionController.swift in Sources */,
-				EB0F67EA1FB55C36002429D3 /* NetworkRequests.swift in Sources */,
+				EB0F67EA1FB55C36002429D3 /* MeetupNetworkRequests.swift in Sources */,
 				EBEE46DA1FAE6F6F00375150 /* Prompts.swift in Sources */,
 				EBEE46C81FAE234A00375150 /* AppDelegate.swift in Sources */,
 				EB0F67E81FB53896002429D3 /* WebViewController.swift in Sources */,
