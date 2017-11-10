@@ -18,10 +18,12 @@ OptOutside doesn't currently have a way to create tokens for the APIs it hits. I
  ### Open Xcode:
 Make sure to open the project using the `OptOutside.xcworkspace` file. Using the `.xcodeproj` file will cause errors. 
 
-In Xcode, click on the top level of the project in the Project Navigator (on the left hand side of xcode). Then under Targets click on OptOutside. In the teams section, set the team to your personal team. 
+1. In Xcode, click on the top level of the project in the Project Navigator (on the left hand side of xcode). 
+2. Then, under Targets click on OptOutside. 
+3. In the teams section, set the team to your personal team. 
 
 #
-You should now be ready to run the app
+You should now be ready to run the app by clicking the Run button at the top of Xcode.
 #
 
 ##### _For bug, issue and feature tracking, see [Trello Board for OptOutside](https://trello.com/b/70QnQif1/optoutside)_
