@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import Alamofire
-import SwiftyJSON
 import Keys
 
 class MeetupNetworkRequests {
@@ -21,9 +19,11 @@ class MeetupNetworkRequests {
     }
     
     func performSearch(zip: String, radius: String, keyword: String, completed: @escaping ([Result]?, Error?) -> Void) {
-        // Download meetup data
+        // Making call to meetup
         let url = meetupURL(zip: zip, radius: radius, keywords: keyword)
         
+        // Use NSURLSession instead of Alamofire for Swift 4's Codable.
+        // Currently, Alamofire doesn't support codable
         let session = URLSession.shared
         let task = session.dataTask(with: url) { (data, response, error) in
             guard error == nil else {
@@ -40,7 +40,6 @@ class MeetupNetworkRequests {
             
             let decoder = JSONDecoder()
             do {
-                
                 let results = try decoder.decode([Result].self, from: responseData)
                 completed(results, nil)
             } catch {

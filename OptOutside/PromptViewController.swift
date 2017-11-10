@@ -12,7 +12,7 @@ import Keys
 import XLActionController
 import SwiftyJSON
 
-class PromptViewController: UIViewController, UIWebViewDelegate {
+class PromptViewController: UIViewController {
 
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var promptTextField: UITextField!
@@ -22,9 +22,9 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     let networkRequests = MeetupNetworkRequests()
     let group = DispatchGroup()
     private var results = [Result]()
-    private var typeOfEvent: String = "swimming"
-    private var whatZip: String = "06010"
-    private var distanceToEvent: String = "10 miles"
+    private var typeOfEvent: String = ""
+    private var whatZip: String = ""
+    private var distanceToEvent: String = ""
     private var whichPrompt = Question.what
     let distanceId = "1019173"
     let distanceModelId = "ITW2WPKETSYEC2GT5V5IDQSJUI"
@@ -41,7 +41,6 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
         super.viewDidLoad()
 
         promptLabel.text = Prompts.whatToDo.randomElement
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -58,7 +57,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
             if let text = promptTextField.text {
                 typeOfEvent = text
                 getActivityDataFromEinstein(activity: typeOfEvent, modelId: activityModelId)
-                // Get a random element from the array provide a more interactive experience
+                // Get a random phrase from the array provide a more interactive experience
                 updatePrompt(newPrompt: Prompts.whatIsZip.randomElement)
             }
             whichPrompt = .zip
@@ -67,7 +66,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                 whatZip = text
                 updatePrompt(newPrompt: Prompts.howFarAway.randomElement)
             }
-            // Change button to indicate last question
+            // Change button title to indicate last question
             nextButton.setTitle("Get Results", for: .normal)
             whichPrompt = .distance
         case .distance:
@@ -106,12 +105,15 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     }
     
     private func showResults(results: [Result]) {
+        // Use prebuilt controller to show results for speed of implementation
+        
         let actionController = CustomSpotifyActionController()
         actionController.settings.behavior.scrollEnabled = true
         actionController.headerData = SpotifyHeaderData(title: "Results for...",
                                                         subtitle: "\(typeOfEvent), \(whatZip), & \(distanceToEvent)",
                                                         image: UIImage(named: "image-placeholder")!)
         if results.count > 0 {
+            // Run through returned groups for display
             for result in results {
                 var groupImage = UIImage()
                 if let imageURL = result.group_photo?.thumb_link {
@@ -122,17 +124,21 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                     groupImage = UIImage(named: "image-placeholder-sm")!
                 }
                 
-                let size = CGSize(width: 44, height: 44)
+                let squareImageDimensions: CGFloat = 44
+                let size = CGSize(width: squareImageDimensions, height: squareImageDimensions)
+                
                 actionController.addAction(Action(ActionData(title: "\(result.name)",
                                                              image: groupImage.crop(to: size)),
                                                              style: .default,
                                                              handler: { action in
+                    // Passing link and name to webview
                     self.link = result.link
                     self.meetupTitle = result.name
                     self.performSegue(withIdentifier: "showWebView", sender: nil)
                 }))
             }
         } else {
+            // Some groups don't have an image, so add fall back
             actionController.addAction(Action(ActionData(title: "No Results",
                                                          image: UIImage(named: "image-placeholder-sm")!),
                                                          style: .default,
@@ -146,11 +152,11 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     // MARK: - EINSTEIN REQUESTS
     
     private func getActivityDataFromEinstein(activity: String, modelId: String) {
-        // Sample call
+        // Sample call:
         // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
         
         let url = "https://api.einstein.ai/v2/language/intent"
-        group.enter()
+        group.enter() // Use dispatch group to make sure this call to Eintein finishes before next begins
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(keys.einsteinToken)",
@@ -158,7 +164,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
             
             ]
         
-        // Example taken from René Winkelmeyer's Github Example:
+        // Call based on René Winkelmeyer's Github Example:
         // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
         
         Alamofire.upload(
@@ -186,7 +192,6 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                             self.typeOfEvent = probableMatch
                             self.group.leave()
                         }
-                        
                     }
                     
                 case .failure(let encodingError):
@@ -196,19 +201,18 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     }
     
     private func getDistanceDataFromEinstein(distance: String, modelId: String) {
-        // Sample call
+        // Sample call:
         // curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Cache-Control: no-cache" -H "Content-Type: multipart/form-data" -F "modelId=WEQ6PHPBGFYVX5C7QDP6XU3NXY" -F "document=what is the weather in los angeles" https://api.einstein.ai/v2/language/intent
         
         let url = "https://api.einstein.ai/v2/language/intent"
-        group.enter()
+        group.enter() // Use dispatch group to make sure this call to Eintein finishes before next begins
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(keys.einsteinToken)",
             "Cache-Control": "no-cache",
-            
             ]
         
-        // Example taken from René Winkelmeyer's Github Example:
+        // Call based on René Winkelmeyer's Github Example:
         // https://github.com/muenzpraeger/salesforce-einstein-vision-swift/blob/master/SalesforceEinsteinVision/Classes/http/HttpClient.swift
         
         Alamofire.upload(
@@ -241,10 +245,8 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                 case .failure(let encodingError):
                     print(encodingError)
                 }
-
         })
     }
-    
 }
 
 extension PromptViewController: UITextFieldDelegate {

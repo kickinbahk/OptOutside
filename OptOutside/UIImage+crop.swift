@@ -13,8 +13,8 @@ extension UIImage {
     func crop(to:CGSize) -> UIImage {
         guard let cgimage = self.cgImage else { return self }
         
-        let width = to.width
-        let height = to.height
+        let width = to.width         // Retain original size passed in
+        let height = to.height       // Retain original size passed in
         let contextImage: UIImage = UIImage(cgImage: cgimage)
         
         let contextSize: CGSize = contextImage.size
