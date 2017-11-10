@@ -19,6 +19,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var nextButton: UIButton!
     
     let keys = OptOutsideKeys()
+    let networkRequests = NetworkRequests()
     private var results = [Result]()
     private var typeOfEvent: String = ""
     private var whatZip: String = ""
@@ -35,10 +36,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
     }
     
     
-    enum BackendError: Error {
-        case urlError(reason: String)
-        case objectSerialization(reason: String)
-    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +76,7 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                 getDistanceDataFromEinstein(distance: distanceToEvent, modelId: distanceModelId)
             }
             promptTextField.resignFirstResponder()
-            performSearch(zip: whatZip, radius: "5", keyword: typeOfEvent) { (results, error)  in
+            networkRequests.performSearch(zip: whatZip, radius: "5", keyword: typeOfEvent) { (results, error)  in
                 if let error = error {
                     print(error)
                     return
@@ -103,55 +101,6 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
         promptLabel.text = newPrompt
     }
     
-    private func performSearch(zip: String, radius: String, keyword: String, completed: @escaping ([Result]?, Error?) -> Void) {
-        // Download meetup data
-        let url = meetupURL(zip: zip, radius: radius, keywords: keyword)
-        
-        let session = URLSession.shared
-        let task = session.dataTask(with: url) { (data, response, error) in
-            guard error == nil else {
-                completed(nil, error!)
-                return
-            }
-            
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                let error = BackendError.objectSerialization(reason: "No data in response")
-                completed(nil, error)
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            do {
-        
-                let results = try decoder.decode([Result].self, from: responseData)
-                completed(results, nil)
-            } catch {
-                print("error trying to convert data to JSON")
-                print(error)
-            }
-        }
-        task.resume()
-    }
-    
-    private func meetupURL(zip: String, radius: String, keywords: String) -> URL {
-        let meetupURL = "https://api.meetup.com/find/groups?"
-        let zipString = "zip=\(zip)"
-        let radiusString = "&radius=\(radius)"
-        let keywordsString = "&keywords=\(keywords)"
-        let key = "&key=\(keys.meetupKey)"
-        let sign = "&sign=true"
-        let upcomingEvents = "upcoming_events=true"
-        let resultsNum = "&page=20"
-        
-        let urlString = "\(meetupURL)\(zipString)\(radiusString)\(keywordsString)\(key)\(sign)\(upcomingEvents)\(resultsNum)"
-        let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
-        print("URL:\(url!)")
-        return url!
-    }
-    
-
-    
     private func showResults(results: [Result]) {
         let actionController = CustomSpotifyActionController()
         actionController.settings.behavior.scrollEnabled = true
@@ -174,8 +123,8 @@ class PromptViewController: UIViewController, UIWebViewDelegate {
                                                              image: groupImage.crop(to: size)),
                                                              style: .default,
                                                              handler: { action in
-                                                                self.link = result.link
-                                                                self.performSegue(withIdentifier: "showWebView", sender: nil)
+                    self.link = result.link
+                    self.performSegue(withIdentifier: "showWebView", sender: nil)
                 }))
             }
         } else {
